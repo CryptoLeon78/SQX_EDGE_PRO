@@ -1,5 +1,5 @@
-﻿from contextlib import asynccontextmanager
-
+from contextlib import asynccontextmanager
+from app.api import assets, health, imports, quality
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -32,7 +32,8 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(assets_router)
-
+app.include_router(imports.router)
+app.include_router(quality.router)
 
 @app.get("/")
 def root() -> dict:

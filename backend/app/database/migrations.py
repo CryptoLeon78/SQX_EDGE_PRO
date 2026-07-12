@@ -5,7 +5,7 @@ from typing import Any
 
 from app.config import DATABASE_PATH, ensure_data_directories
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 RESOURCE_DIR = Path(__file__).resolve().parents[1] / "resources"
 CATALOG_SEED_PATH = RESOURCE_DIR / "catalog_seed.json"
 
@@ -31,25 +31,20 @@ def load_catalog_seed() -> dict[str, Any]:
 
 
 def create_base_schema(connection: sqlite3.Connection) -> None:
-    connection.execute(
-        """
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS schema_migrations (
             version INTEGER PRIMARY KEY,
             applied_at TEXT NOT NULL
         )
-        """
-    )
-    connection.execute(
-        """
+    """)
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS application_metadata (
             key TEXT PRIMARY KEY,
             value TEXT NOT NULL,
             updated_at TEXT NOT NULL
         )
-        """
-    )
-    connection.execute(
-        """
+    """)
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS assets (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -60,10 +55,8 @@ def create_base_schema(connection: sqlite3.Connection) -> None:
             created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
-        """
-    )
-    connection.execute(
-        """
+    """)
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS edge_entries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             asset_id TEXT NOT NULL,
@@ -78,13 +71,11 @@ def create_base_schema(connection: sqlite3.Connection) -> None:
             UNIQUE(asset_id, category, direction, rating),
             FOREIGN KEY(asset_id) REFERENCES assets(id) ON DELETE CASCADE
         )
-        """
-    )
+    """)
 
 
 def create_edge_schema(connection: sqlite3.Connection) -> None:
-    connection.execute(
-        """
+    connection.execute("""
         CREATE TABLE IF NOT EXISTS edge_categories (
             code TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -93,8 +84,81 @@ def create_edge_schema(connection: sqlite3.Connection) -> None:
             indicator_count INTEGER NOT NULL DEFAULT 0,
             enabled INTEGER NOT NULL DEFAULT 1 CHECK(enabled IN (0, 1))
         )
-        """
-    )
+    """)
+
+
+def create_quality_schema(connection: sqlite3.Connection) -> None:
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS quality_snapshots (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            provider TEXT NOT NULL,
+            raw_symbol TEXT NOT NULL,
+            canonical_asset_id TEXT NOT NULL,
+            imported_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            source_stats_name TEXT NOT NULL,
+            source_hourly_name TEXT,
+            current_spread REAL,
+            avg_spread REAL NOT NULL,
+            p50 REAL NOT NULL,
+            p75 REAL NOT NULL,
+            p90 REAL NOT NULL,
+            p99 REAL NOT NULL,
+            min_spread REAL NOT NULL,
+            max_spread REAL NOT NULL,
+            mode_spread REAL NOT NULL,
+            samples_count INTEGER NOT NULL,
+            neg_spread_count INTEGER NOT NULL DEFAULT 0,
+            pip_tick_size REAL NOT NULL,
+            point_value_usd REAL NOT NULL,
+            pip_tick_step REAL NOT NULL,
+            order_size_step REAL NOT NULL,
+            tick_value REAL NOT NULL,
+            point REAL NOT NULL,
+            FOREIGN KEY(canonical_asset_id) REFERENCES assets(id)
+        )
+    """)
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS quality_spread_years (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            snapshot_id INTEGER NOT NULL,
+            year INTEGER NOT NULL,
+            avg_spread REAL NOT NULL,
+            p50 REAL NOT NULL,
+            p75 REAL NOT NULL,
+            p90 REAL NOT NULL,
+            p99 REAL NOT NULL,
+            min_spread REAL NOT NULL,
+            max_spread REAL NOT NULL,
+            mode_spread REAL NOT NULL,
+            samples_count INTEGER NOT NULL,
+            neg_spread_count INTEGER NOT NULL DEFAULT 0,
+            UNIQUE(snapshot_id, year),
+            FOREIGN KEY(snapshot_id) REFERENCES quality_snapshots(id) ON DELETE CASCADE
+        )
+    """)
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS quality_spread_hours (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            snapshot_id INTEGER NOT NULL,
+            hour INTEGER NOT NULL CHECK(hour BETWEEN 0 AND 23),
+            session TEXT NOT NULL,
+            avg_spread REAL NOT NULL,
+            p50 REAL NOT NULL,
+            p75 REAL NOT NULL,
+            p90 REAL NOT NULL,
+            p99 REAL NOT NULL,
+            min_spread REAL NOT NULL,
+            max_spread REAL NOT NULL,
+            mode_spread REAL NOT NULL,
+            samples_count INTEGER NOT NULL,
+            UNIQUE(snapshot_id, hour),
+            FOREIGN KEY(snapshot_id) REFERENCES quality_snapshots(id) ON DELETE CASCADE
+        )
+    """)
+    connection.execute("""
+        CREATE INDEX IF NOT EXISTS idx_quality_snapshots_asset_imported
+        ON quality_snapshots(canonical_asset_id, imported_at DESC)
+    """)
 
 
 def seed_catalog(connection: sqlite3.Connection) -> None:
@@ -180,12 +244,10 @@ def migrate() -> int:
             connection.execute(
                 "INSERT INTO schema_migrations(version, applied_at) VALUES (1, datetime('now'))"
             )
-
         if current_version < 2:
             connection.execute(
                 "INSERT INTO schema_migrations(version, applied_at) VALUES (2, datetime('now'))"
             )
-
         if current_version < 3:
             create_edge_schema(connection)
             connection.execute(
@@ -193,6 +255,14 @@ def migrate() -> int:
             )
         else:
             create_edge_schema(connection)
+
+        if current_version < 4:
+            create_quality_schema(connection)
+            connection.execute(
+                "INSERT INTO schema_migrations(version, applied_at) VALUES (4, datetime('now'))"
+            )
+        else:
+            create_quality_schema(connection)
 
         seed_catalog(connection)
         connection.commit()
