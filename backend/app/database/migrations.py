@@ -26,7 +26,8 @@ def get_schema_version(connection: sqlite3.Connection) -> int:
 
 
 def load_catalog_seed() -> dict[str, Any]:
-    with CATALOG_SEED_PATH.open(encoding="utf-8") as file:
+    # utf-8-sig admite UTF-8 sin BOM y UTF-8 con BOM generado por PowerShell.
+    with CATALOG_SEED_PATH.open(encoding="utf-8-sig") as file:
         return json.load(file)
 
 

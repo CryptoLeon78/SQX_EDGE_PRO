@@ -26,7 +26,7 @@ class CatalogSeedTests(unittest.TestCase):
 
     def test_seed_is_valid_json(self) -> None:
         seed_path = BACKEND_DIR / "app" / "resources" / "catalog_seed.json"
-        with seed_path.open(encoding="utf-8") as file:
+        with seed_path.open(encoding="utf-8-sig") as file:
             decoded = json.load(file)
         self.assertIn("assets", decoded)
 
