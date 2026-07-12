@@ -10,9 +10,9 @@
   <main class="shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">SQX EDGE PRO · FASE 1A</p>
-        <h1>Catálogo de activos</h1>
-        <p class="subtitle">Catálogo Edge persistente · SQLite · API local</p>
+        <p class="eyebrow">SQX EDGE PRO · FASE 2B</p>
+        <h1>Catálogo y Calidad MT5</h1>
+        <p class="subtitle">Edge persistente · snapshots MT5 · SQLite · API local</p>
       </div>
       <span id="connectionBadge" class="badge pending">Conectando…</span>
     </header>
@@ -31,8 +31,8 @@
         <strong id="edgeCount">—</strong>
       </article>
       <article class="metric">
-        <span>API</span>
-        <strong id="apiPort">—</strong>
+        <span>Snapshots MT5</span>
+        <strong id="qualityCount">—</strong>
       </article>
     </section>
 
@@ -55,6 +55,7 @@
                 <th>Tipo</th>
                 <th>Subtipo</th>
                 <th>Edge</th>
+                <th>Calidad MT5</th>
               </tr>
             </thead>
             <tbody id="assetsTableBody"></tbody>
@@ -63,11 +64,122 @@
       </article>
 
       <aside class="panel detail-panel">
-        <h2>Detalle</h2>
+        <h2>Detalle Edge</h2>
         <div id="assetDetail" class="empty-state">
           Selecciona un activo del catálogo.
         </div>
       </aside>
+    </section>
+
+    <section class="panel quality-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Calidad MT5</h2>
+          <p id="qualityStatus">Cargando snapshots de calidad…</p>
+        </div>
+        <div class="quality-actions">
+          <label class="select-label" for="qualitySnapshotSelect">Snapshot</label>
+          <select id="qualitySnapshotSelect" disabled>
+            <option>Cargando…</option>
+          </select>
+          <button id="showSelectedQualityButton" type="button" disabled>
+            Ver seleccionado
+          </button>
+          <button id="showAllQualityButton" type="button" disabled>
+            Todos
+          </button>
+        </div>
+      </div>
+
+      <div id="qualityEmpty" class="empty-state">
+        Todavía no hay snapshots MT5 importados.
+      </div>
+
+      <div id="qualityContent" hidden>
+        <div class="quality-identifiers">
+          <div>
+            <span>Activo</span>
+            <strong id="qualityAsset">—</strong>
+          </div>
+          <div>
+            <span>Proveedor</span>
+            <strong id="qualityProvider">—</strong>
+          </div>
+          <div>
+            <span>Importado</span>
+            <strong id="qualityImportedAt">—</strong>
+          </div>
+          <div>
+            <span>Muestras</span>
+            <strong id="qualitySamples">—</strong>
+          </div>
+        </div>
+
+        <div class="quality-metrics">
+          <article class="metric">
+            <span>Spread actual</span>
+            <strong id="qualityCurrentSpread">—</strong>
+          </article>
+          <article class="metric">
+            <span>Media</span>
+            <strong id="qualityAvgSpread">—</strong>
+          </article>
+          <article class="metric">
+            <span>P50</span>
+            <strong id="qualityP50">—</strong>
+          </article>
+          <article class="metric">
+            <span>P90</span>
+            <strong id="qualityP90">—</strong>
+          </article>
+          <article class="metric">
+            <span>P99</span>
+            <strong id="qualityP99">—</strong>
+          </article>
+        </div>
+
+        <div class="quality-grid">
+          <article>
+            <h3>Spread anual</h3>
+            <div class="table-wrap quality-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Año</th>
+                    <th>Media</th>
+                    <th>P50</th>
+                    <th>P90</th>
+                    <th>P99</th>
+                    <th>Máx.</th>
+                    <th>Muestras</th>
+                  </tr>
+                </thead>
+                <tbody id="qualityYearsBody"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article>
+            <h3>Spread por hora y sesión</h3>
+            <div class="table-wrap quality-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Hora</th>
+                    <th>Sesión</th>
+                    <th>Media</th>
+                    <th>P50</th>
+                    <th>P90</th>
+                    <th>P99</th>
+                    <th>Muestras</th>
+                  </tr>
+                </thead>
+                <tbody id="qualityHoursBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
     <section class="panel diagnostics">
@@ -76,7 +188,7 @@
           <h2>Diagnóstico</h2>
           <p>Respuesta del backend local</p>
         </div>
-        <button id="refreshButton" type="button">Recargar catálogo</button>
+        <button id="refreshButton" type="button">Recargar datos</button>
       </div>
       <pre id="rawResponse"></pre>
     </section>
