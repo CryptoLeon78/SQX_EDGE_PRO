@@ -1,9 +1,9 @@
-﻿# SQX Edge Pro - Desarrollo local
-# Ejecutar desde la raíz del repositorio.
+﻿$ErrorActionPreference = "Stop"
 
-$ErrorActionPreference = "Stop"
-$ProjectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-Set-Location $ProjectRoot
+$ProjectRoot = $PSScriptRoot
+$BackendDir = Join-Path $ProjectRoot "backend"
+$VenvPath = Join-Path $BackendDir ".venv"
+$VenvPython = Join-Path $VenvPath "Scripts\python.exe"
 
 function Require-Command {
     param([Parameter(Mandatory = $true)][string]$Name)
@@ -17,28 +17,27 @@ Require-Command "python"
 Require-Command "node"
 Require-Command "npm"
 
-$pythonVersion = (& python --version 2>&1)
-$nodeVersion = (& node --version 2>&1)
-Write-Host "Python: $pythonVersion"
-Write-Host "Node:   $nodeVersion"
+Write-Host "Python: $(& python --version 2>&1)"
+Write-Host "Node:   $(& node --version 2>&1)"
 
-$venvPath = Join-Path $ProjectRoot "backend\.venv"
-$venvPython = Join-Path $venvPath "Scripts\python.exe"
-
-if (-not (Test-Path $venvPython)) {
+if (-not (Test-Path $VenvPython)) {
     Write-Host "Creando entorno virtual Python..."
-    & python -m venv $venvPath
+    & python -m venv $VenvPath
 }
 
-Write-Host "Instalando dependencias Python..."
-& $venvPython -m pip install --upgrade pip
-& $venvPython -m pip install -e $ProjectRoot
+Write-Host "Instalando FastAPI, Uvicorn y Pydantic..."
+& $VenvPython -m pip install --upgrade pip
+& $VenvPython -m pip install `
+    "fastapi>=0.115,<1.0" `
+    "uvicorn[standard]>=0.30,<1.0" `
+    "pydantic>=2.8,<3.0"
 
 if (-not (Test-Path (Join-Path $ProjectRoot "node_modules"))) {
-    Write-Host "Instalando dependencias Electron..."
+    Write-Host "Instalando Electron..."
     & npm install
 }
 
-$env:PATH = "$(Join-Path $venvPath 'Scripts');$env:PATH"
+$env:PATH = "$(Join-Path $VenvPath 'Scripts');$env:PATH"
+
 Write-Host "Iniciando SQX Edge Pro..."
 & npm run dev
