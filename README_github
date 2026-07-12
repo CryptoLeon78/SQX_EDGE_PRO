@@ -1,0 +1,325 @@
+# SQX Edge Pro
+
+**Aplicación Windows de escritorio para gestión de portafolios SQX, perfiles de ejecución y análisis de calidad de datos en MetaTrader 5.**
+
+Integra Electron (UI), FastAPI (backend cuantitativo) y SQLite (persistencia local) en una suite completa para traders algorítmicos.
+
+---
+
+## 📋 Requisitos Previos
+
+| Componente | Versión | Verificar |
+|-----------|---------|----------|
+| **Windows** | 10 / 11 | `winver` |
+| **Python** | 3.11+ | `python --version` |
+| **Node.js** | 18+ LTS | `node --version` |
+| **Git** | (opcional) | `git --version` |
+
+**Setup rápido:**
+```bash
+# Verificar Python
+python --version  # debe ser >= 3.11
+
+# Verificar Node
+node --version    # debe ser >= 18
+npm --version
+```
+
+---
+
+## 🚀 Instalación y Ejecución
+
+### Opción 1: Desde Carpeta Local (Desarrollo)
+
+```powershell
+# 1. Abre PowerShell en la carpeta del proyecto
+cd 'C:\BOTS\Versiones\Config y spreads ACTIVOS\SQX_EDGE_PRO'
+
+# 2. Permite ejecución de scripts (solo primera vez)
+Set-ExecutionPolicy -Scope Process Bypass
+
+# 3. Ejecuta script de inicio
+.\run_dev.ps1
+```
+
+**Primera ejecución:** El script crea automáticamente:
+- `backend\.venv` (virtual environment Python)
+- Instala dependencias Python desde `pyproject.toml`
+- Ejecuta `npm install` para dependencias frontend
+
+### Opción 2: Desde Repositorio GitHub
+
+```bash
+# Clonar repositorio
+git clone https://github.com/tu-usuario/SQX_EDGE_PRO.git
+cd SQX_EDGE_PRO
+
+# Arrancar igual que Opción 1
+Set-ExecutionPolicy -Scope Process Bypass
+.\run_dev.ps1
+```
+
+---
+
+## ✅ Validación de Inicio
+
+La ventana debe mostrar (barra superior/panel):
+
+```
+✓ Backend conectado
+✓ API: http://127.0.0.1:<puerto>
+✓ User data: C:\Users\<usuario>\AppData\Local\SQX Edge Pro
+✓ Database: C:\Users\<usuario>\AppData\Local\SQX Edge Pro\sqx_edge.db
+✓ Migration: ok
+```
+
+**Prueba rápida:**
+```bash
+# En otro terminal, durante ejecución
+curl http://127.0.0.1:<puerto>/health
+
+# Debe devolver: {"status": "ok"}
+
+# Swagger UI (docs interactivo):
+# Abre en navegador: http://127.0.0.1:<puerto>/docs
+```
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+SQX_EDGE_PRO/
+├── backend/                  # FastAPI + lógica cuantitativa
+│   ├── app/
+│   │   ├── api/             # Endpoints
+│   │   ├── core/            # Score engine, normalizadores
+│   │   ├── database/        # Migraciones, sesión SQLite
+│   │   ├── repositories/    # Data access layer
+│   │   ├── resources/       # Datos seed (catálogo)
+│   │   ├── services/        # MT5 CSV import, lógica
+│   │   └── main.py
+│   ├── tests/               # Pytest fixtures
+│   ├── pyproject.toml       # Dependencias Python
+│   └── .venv/               # (Generado en primera ejecución)
+│
+├── frontend/                 # HTML + JavaScript vanilla
+│   ├── index.html           # UI principal
+│   ├── css/app.css         # Estilos
+│   └── js/app.js           # Lógica frontend
+│
+├── desktop/                 # Electron shell
+│   ├── main.js             # Proceso principal
+│   ├── preload.js          # IPC seguro
+│   ├── backend-manager.js  # Spawn/manage FastAPI
+│   └── paths.js            # Rutas locales AppData
+│
+├── docs/                    # Documentación técnica
+│   ├── architecture.md
+│   └── data-contracts.md
+│
+├── package.json            # Dependencias Node
+├── package-lock.json       # Lock file
+├── .gitignore             # Git rules
+├── run_dev.ps1            # Script de inicio
+└── README.md              # Este archivo
+```
+
+---
+
+## 🔧 Arquitectura
+
+### Stack Tecnológico
+
+| Capa | Tecnología | Propósito |
+|------|-----------|----------|
+| **UI** | Electron + JavaScript | Shell desktop nativo + interfaz |
+| **API** | FastAPI (Python) | Backend cuantitativo, orquestación |
+| **BD** | SQLite | Persistencia local (catálogo, perfiles) |
+| **IPC** | Electron IPC | Comunicación UI ↔ Electron ↔ FastAPI |
+
+### Flujo de Datos
+
+```
+UI (Electron) 
+    ↓ IPC Message
+Electron Main Process
+    ↓ TCP/HTTP
+FastAPI Backend (127.0.0.1)
+    ↓
+SQLite Database (%LOCALAPPDATA%\SQX Edge Pro\sqx_edge.db)
+```
+
+### Ubicaciones de Datos
+
+| Tipo | Ubicación | Notas |
+|------|-----------|-------|
+| **Repo (código)** | `C:\BOTS\Versiones\Config y spreads ACTIVOS\SQX_EDGE_PRO` | Nunca contiene datos operativos |
+| **Datos operativos** | `%LOCALAPPDATA%\SQX Edge Pro\` | Generado en primera ejecución |
+| **Base de datos** | `%LOCALAPPDATA%\SQX Edge Pro\sqx_edge.db` | Creada por migración automática |
+
+---
+
+## 🔐 Seguridad y Privacidad
+
+### Archivos Ignorados por Git
+
+Nunca se commitean:
+- `.env`, `.env.local` → Secretos
+- `data/`, `imports/`, `exports/` → Datos operativos
+- `logs/`, `backups/`, `*.db` → Archivos dinámicos
+- `node_modules/`, `__pycache__/`, `.venv/` → Dependencies
+
+**Verificar antes de push:**
+```bash
+git status
+# Confirma que NO ve archivos .env, .db, data/*
+```
+
+### Variables de Entorno
+
+Si necesitas `.env` para desarrollo local, crea un template:
+
+`.env.example` (commitear este, no el `.env`):
+```env
+# Backend API (opcional, default: 127.0.0.1:5000)
+# API_HOST=127.0.0.1
+# API_PORT=5000
+
+# Logging (opcional)
+# LOG_LEVEL=INFO
+```
+
+---
+
+## 📚 Documentación Técnica
+
+- **`docs/architecture.md`** → Decisiones de diseño, diagrama de componentes
+- **`docs/data-contracts.md`** → Esquemas API, modelos Pydantic
+
+Actualiza estos documentos al agregar features o cambiar APIs.
+
+---
+
+## 🤝 Workflow de Desarrollo
+
+### Rama Principal: `main` (Producción)
+
+```bash
+# Solo cambios validados y testeados
+# Requiere pull request con revisión
+```
+
+### Rama de Desarrollo: `develop` (Default)
+
+```bash
+# Base para nuevas features
+# Integración continua
+
+# Crear feature branch
+git checkout -b feature/nombre-feature
+
+# Hacer cambios, commit, push
+git push origin feature/nombre-feature
+
+# Crear Pull Request en GitHub
+# Merge a develop después de revisión
+```
+
+### Rama Hotfix: `hotfix/*`
+
+```bash
+git checkout -b hotfix/nombre-fix
+# Fix urgente, merge directo a main y develop
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Backend tests (pytest)
+cd backend
+python -m pytest tests/ -v
+
+# Frontend (manual, por ahora)
+# Abre http://127.0.0.1:<puerto> durante ejecución
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Python no encontrado
+```powershell
+# Verifica que Python está en PATH
+python --version
+
+# Si no, reinstala con "Add Python to PATH" activado
+# https://www.python.org/downloads/
+```
+
+### Node/npm no encontrados
+```bash
+node --version
+npm --version
+
+# Si no están, instala desde https://nodejs.org
+```
+
+### Backend no inicia
+```bash
+# Elimina venv corrupto y reinicia
+Remove-Item backend\.venv -Recurse -Force
+.\run_dev.ps1
+```
+
+### Puerto 5000 en uso
+```bash
+# Busca proceso en puerto 5000
+netstat -ano | findstr :5000
+
+# Termina proceso (ID = PID)
+taskkill /PID <PID> /F
+
+# O edita puerto en backend/app/main.py y run_dev.ps1
+```
+
+---
+
+## 📝 Contribuciones
+
+1. **Fork** o **clonar** repositorio
+2. **Crear feature branch** (`git checkout -b feature/X`)
+3. **Hacer cambios** y **tests locales**
+4. **Commit y push** (`git push origin feature/X`)
+5. **Pull Request** con descripción clara
+6. **Revisión** y merge a `develop`
+
+---
+
+## 📜 Licencia
+
+[Especifica tu licencia aquí - MIT, GPL, Privada, etc.]
+
+---
+
+## 📞 Contacto / Soporte
+
+- **Issues:** Crea issue en GitHub para bugs o features
+- **Discussions:** Para preguntas técnicas
+- **Email:** [Tu email]
+
+---
+
+## 🔍 Versión
+
+**Fase actual:** 0 (MVP)
+- Electron + FastAPI + SQLite
+- Health check y migración inicial
+- Catálogo seed mínimo
+
+**Próximas fases:**
+- Fase 1: Importador MT5 completo
+- Fase 2: Dashboard de calidad de datos
+- Fase 3: Optimizador de perfiles
