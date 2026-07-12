@@ -10,42 +10,74 @@
   <main class="shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">SQX EDGE PRO · FASE 0</p>
-        <h1>Diagnóstico de plataforma</h1>
-        <p class="subtitle">Electron + FastAPI + SQLite</p>
+        <p class="eyebrow">SQX EDGE PRO · FASE 1A</p>
+        <h1>Catálogo de activos</h1>
+        <p class="subtitle">Catálogo Edge persistente · SQLite · API local</p>
       </div>
       <span id="connectionBadge" class="badge pending">Conectando…</span>
     </header>
 
-    <section class="grid">
-      <article class="panel">
-        <h2>Backend local</h2>
-        <dl>
-          <div><dt>Estado</dt><dd id="backendStatus">Pendiente</dd></div>
-          <div><dt>API</dt><dd id="apiUrl">—</dd></div>
-          <div><dt>Versión</dt><dd id="apiVersion">—</dd></div>
-          <div><dt>Schema SQLite</dt><dd id="schemaVersion">—</dd></div>
-        </dl>
+    <section class="summary">
+      <article class="metric">
+        <span>Activos</span>
+        <strong id="assetCount">—</strong>
       </article>
-
-      <article class="panel">
-        <h2>Persistencia</h2>
-        <dl>
-          <div><dt>Directorio de datos</dt><dd id="dataDir">—</dd></div>
-          <div><dt>Base de datos</dt><dd id="dbPath">—</dd></div>
-          <div><dt>Runtime</dt><dd id="runtimeInfo">—</dd></div>
-        </dl>
+      <article class="metric">
+        <span>Tipos</span>
+        <strong id="typeCount">—</strong>
+      </article>
+      <article class="metric">
+        <span>Entradas Edge</span>
+        <strong id="edgeCount">—</strong>
+      </article>
+      <article class="metric">
+        <span>API</span>
+        <strong id="apiPort">—</strong>
       </article>
     </section>
 
-    <section class="panel next">
-      <h2>Resultado esperado</h2>
-      <p>
-        Si todos los campos muestran datos y el estado es <strong>Conectado</strong>,
-        la base de Fase 0 está validada. El siguiente incremento añadirá el catálogo
-        persistente y el primer endpoint de activos.
-      </p>
-      <button id="refreshButton" type="button">Revalidar conexión</button>
+    <section class="content-grid">
+      <article class="panel assets-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Por activo</h2>
+            <p id="tableStatus">Cargando catálogo…</p>
+          </div>
+          <input id="assetSearch" type="search" placeholder="Buscar activo…" />
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Símbolo</th>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Subtipo</th>
+                <th>Edge</th>
+              </tr>
+            </thead>
+            <tbody id="assetsTableBody"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <aside class="panel detail-panel">
+        <h2>Detalle</h2>
+        <div id="assetDetail" class="empty-state">
+          Selecciona un activo del catálogo.
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel diagnostics">
+      <div class="panel-header">
+        <div>
+          <h2>Diagnóstico</h2>
+          <p>Respuesta del backend local</p>
+        </div>
+        <button id="refreshButton" type="button">Recargar catálogo</button>
+      </div>
       <pre id="rawResponse"></pre>
     </section>
   </main>

@@ -3,9 +3,265 @@
   "catalog_version": "0.1.0",
   "assets": [
     {
+      "id": "AUDCAD",
+      "name": "Australian Dollar / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "AUDCHF",
+      "name": "Australian Dollar / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "AUDJPY",
+      "name": "Australian Dollar / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "AUDNZD",
+      "name": "Australian Dollar / New Zealand Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "AUDUSD",
+      "name": "Australian Dollar / US Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "CADCHF",
+      "name": "Canadian Dollar / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "CADJPY",
+      "name": "Canadian Dollar / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "EURAUD",
+      "name": "Euro / Australian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "EURGBP",
+      "name": "Euro / Great Britain Pound",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "EURJPY",
+      "name": "Euro / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
       "id": "EURUSD",
       "name": "Euro / US Dollar",
       "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "GBPAUD",
+      "name": "Great Britain Pound / Australian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "GBPCAD",
+      "name": "Great Britain Pound / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "GBPCHF",
+      "name": "Great Britain Pound / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "GBPJPY",
+      "name": "Great Britain Pound / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "GBPUSD",
+      "name": "Great Britain Pound / US Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "NZDCAD",
+      "name": "New Zealand Dollar / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "NZDUSD",
+      "name": "New Zealand Dollar / US Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "USDCAD",
+      "name": "US Dollar / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "USDCHF",
+      "name": "US Dollar / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "USDJPY",
+      "name": "US Dollar / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "XAUUSD",
+      "name": "Gold / US Dollar",
+      "asset_type": "Metals",
+      "subtype": "Gold",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "XAGUSD",
+      "name": "Silver / US Dollar",
+      "asset_type": "Metals",
+      "subtype": "Silver",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "SP500",
+      "name": "US S&P 500",
+      "asset_type": "Indices",
+      "subtype": "US",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "NDX",
+      "name": "US Tech 100",
+      "asset_type": "Indices",
+      "subtype": "US",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "DJI",
+      "name": "US Wall Street 30",
+      "asset_type": "Indices",
+      "subtype": "US",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "GDAXI",
+      "name": "Germany 40",
+      "asset_type": "Indices",
+      "subtype": "Europe",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "UK100",
+      "name": "UK 100",
+      "asset_type": "Indices",
+      "subtype": "Europe",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "FCHI",
+      "name": "France 40",
+      "asset_type": "Indices",
+      "subtype": "Europe",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "HSI",
+      "name": "Hong Kong 50",
+      "asset_type": "Indices",
+      "subtype": "Asia",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "USOIL",
+      "name": "US Crude Oil",
+      "asset_type": "Commodities",
+      "subtype": "Energy",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "UKOIL",
+      "name": "Brent Crude Oil",
+      "asset_type": "Commodities",
+      "subtype": "Energy",
+      "enabled": true,
+      "edges": []
+    },
+    {
+      "id": "BTCUSD",
+      "name": "Bitcoin / US Dollar",
+      "asset_type": "Crypto",
       "subtype": "Major",
       "enabled": true,
       "edges": []
