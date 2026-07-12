@@ -1,0 +1,14 @@
+﻿{
+  "schema_version": 1,
+  "catalog_version": "0.1.0",
+  "assets": [
+    {
+      "id": "EURUSD",
+      "name": "Euro / US Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": []
+    }
+  ]
+}

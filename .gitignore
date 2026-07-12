@@ -1,0 +1,22 @@
+﻿node_modules/
+release/
+dist/
+out/
+*.log
+
+backend/.venv/
+backend/__pycache__/
+backend/**/*.pyc
+
+.env
+.vscode/
+.idea/
+
+# Datos de ejecución: viven en LocalAppData, nunca dentro del repo.
+data/
+imports/
+exports/
+logs/
+backups/
+profiles/
+*.db

@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQX Edge Pro</title>
+  <link rel="stylesheet" href="./css/app.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">SQX EDGE PRO · FASE 0</p>
+        <h1>Diagnóstico de plataforma</h1>
+        <p class="subtitle">Electron + FastAPI + SQLite</p>
+      </div>
+      <span id="connectionBadge" class="badge pending">Conectando…</span>
+    </header>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Backend local</h2>
+        <dl>
+          <div><dt>Estado</dt><dd id="backendStatus">Pendiente</dd></div>
+          <div><dt>API</dt><dd id="apiUrl">—</dd></div>
+          <div><dt>Versión</dt><dd id="apiVersion">—</dd></div>
+          <div><dt>Schema SQLite</dt><dd id="schemaVersion">—</dd></div>
+        </dl>
+      </article>
+
+      <article class="panel">
+        <h2>Persistencia</h2>
+        <dl>
+          <div><dt>Directorio de datos</dt><dd id="dataDir">—</dd></div>
+          <div><dt>Base de datos</dt><dd id="dbPath">—</dd></div>
+          <div><dt>Runtime</dt><dd id="runtimeInfo">—</dd></div>
+        </dl>
+      </article>
+    </section>
+
+    <section class="panel next">
+      <h2>Resultado esperado</h2>
+      <p>
+        Si todos los campos muestran datos y el estado es <strong>Conectado</strong>,
+        la base de Fase 0 está validada. El siguiente incremento añadirá el catálogo
+        persistente y el primer endpoint de activos.
+      </p>
+      <button id="refreshButton" type="button">Revalidar conexión</button>
+      <pre id="rawResponse"></pre>
+    </section>
+  </main>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿{
+  "name": "sqx-edge-pro",
+  "version": "0.1.0",
+  "description": "SQX Edge Pro desktop application",
+  "main": "desktop/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^32.2.0"
+  }
+}
