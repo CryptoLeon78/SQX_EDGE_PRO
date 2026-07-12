@@ -1,126 +1,115 @@
 ﻿{
   "schema_version": 1,
-  "catalog_version": "0.1.0",
+  "catalog_version": "0.2.0",
+  "categories": [
+    {
+      "code": "trend",
+      "name": "Tendencia",
+      "description": "Dirección y fuerza de tendencia dominante.",
+      "sort_order": 1,
+      "indicator_count": 19,
+      "enabled": true
+    },
+    {
+      "code": "momentum",
+      "name": "Momentum / Fuerza",
+      "description": "Impulso, aceleración y agotamiento.",
+      "sort_order": 2,
+      "indicator_count": 20,
+      "enabled": true
+    },
+    {
+      "code": "volatility",
+      "name": "Volatilidad",
+      "description": "Expansión, contracción y ruptura.",
+      "sort_order": 3,
+      "indicator_count": 14,
+      "enabled": true
+    },
+    {
+      "code": "regime",
+      "name": "Régimen de mercado",
+      "description": "Tendencia, rango y ciclo.",
+      "sort_order": 4,
+      "indicator_count": 5,
+      "enabled": true
+    },
+    {
+      "code": "volume",
+      "name": "Volumen / VWAP",
+      "description": "Confirmación por volumen y precio ponderado.",
+      "sort_order": 5,
+      "indicator_count": 2,
+      "enabled": true
+    },
+    {
+      "code": "support_resistance",
+      "name": "Soporte / Resistencia",
+      "description": "Niveles clave y estructura de precio.",
+      "sort_order": 6,
+      "indicator_count": 7,
+      "enabled": true
+    },
+    {
+      "code": "statistical",
+      "name": "Estadístico / Cuantitativo",
+      "description": "Extremos, percentiles y reversión a la media.",
+      "sort_order": 7,
+      "indicator_count": 3,
+      "enabled": true
+    }
+  ],
   "assets": [
-    {
-      "id": "AUDCAD",
-      "name": "Australian Dollar / Canadian Dollar",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "AUDCHF",
-      "name": "Australian Dollar / Swiss Franc",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "AUDJPY",
-      "name": "Australian Dollar / Japanese Yen",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "AUDNZD",
-      "name": "Australian Dollar / New Zealand Dollar",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "AUDUSD",
-      "name": "Australian Dollar / US Dollar",
-      "asset_type": "Forex",
-      "subtype": "Major",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "CADCHF",
-      "name": "Canadian Dollar / Swiss Franc",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "CADJPY",
-      "name": "Canadian Dollar / Japanese Yen",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "EURAUD",
-      "name": "Euro / Australian Dollar",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "EURGBP",
-      "name": "Euro / Great Britain Pound",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "EURJPY",
-      "name": "Euro / Japanese Yen",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
     {
       "id": "EURUSD",
       "name": "Euro / US Dollar",
       "asset_type": "Forex",
       "subtype": "Major",
       "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "GBPAUD",
-      "name": "Great Britain Pound / Australian Dollar",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "GBPCAD",
-      "name": "Great Britain Pound / Canadian Dollar",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "GBPCHF",
-      "name": "Great Britain Pound / Swiss Franc",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "GBPJPY",
-      "name": "Great Britain Pound / Japanese Yen",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Tendencias macro claras por divergencia de política monetaria."
+        },
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["M15", "M30", "H1"],
+          "why": "Reversiones de extremos RSI y Stochastic bien definidas."
+        },
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Alterna fases macro de tendencia y consolidación."
+        },
+        {
+          "category": "volume",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "El alto tick volume hace representativo el uso de VWAP."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Pivots y Fibonacci ampliamente respetados."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["M30", "H1", "H4"],
+          "why": "Distribución apta para Z-Score y reversión estadística."
+        }
+      ]
     },
     {
       "id": "GBPUSD",
@@ -128,39 +117,43 @@
       "asset_type": "Forex",
       "subtype": "Major",
       "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "NZDCAD",
-      "name": "New Zealand Dollar / Canadian Dollar",
-      "asset_type": "Forex",
-      "subtype": "Cross",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "NZDUSD",
-      "name": "New Zealand Dollar / US Dollar",
-      "asset_type": "Forex",
-      "subtype": "Major",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "USDCAD",
-      "name": "US Dollar / Canadian Dollar",
-      "asset_type": "Forex",
-      "subtype": "Major",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "USDCHF",
-      "name": "US Dollar / Swiss Franc",
-      "asset_type": "Forex",
-      "subtype": "Major",
-      "enabled": true,
-      "edges": []
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Tendencias macro por divergencia monetaria."
+        },
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "M30", "H1"],
+          "why": "Impulsos y extremos intradía aprovechables."
+        },
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["M15", "H1", "H4"],
+          "why": "Volatilidad intrínseca elevada de GBP."
+        },
+        {
+          "category": "volume",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "Liquidez y tick volume suficientes para VWAP."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Niveles institucionales y pivots útiles."
+        }
+      ]
     },
     {
       "id": "USDJPY",
@@ -168,7 +161,874 @@
       "asset_type": "Forex",
       "subtype": "Major",
       "enabled": true,
-      "edges": []
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Tendencias macro y divergencia de tipos."
+        },
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "H1", "H4"],
+          "why": "Sesión asiática y movimientos por política japonesa."
+        },
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Cambios de fase macro detectables."
+        },
+        {
+          "category": "volume",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "VWAP útil por liquidez elevada."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Respeta pivots y niveles técnicos."
+        }
+      ]
+    },
+    {
+      "id": "USDCHF",
+      "name": "US Dollar / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Tendencias macro sostenidas."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Niveles y pivots respetados."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["M30", "H1", "H4"],
+          "why": "Comportamiento adecuado para Z-Score."
+        }
+      ]
+    },
+    {
+      "id": "AUDUSD",
+      "name": "Australian Dollar / US Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "M30", "H1"],
+          "why": "Extremos de osciladores aprovechables."
+        },
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Fases por materias primas y diferencial de tipos."
+        }
+      ]
+    },
+    {
+      "id": "NZDUSD",
+      "name": "New Zealand Dollar / US Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "M30", "H1"],
+          "why": "Reversiones en extremos de osciladores."
+        }
+      ]
+    },
+    {
+      "id": "USDCAD",
+      "name": "US Dollar / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Major",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "H1", "H4"],
+          "why": "Relación con petróleo genera expansión de rango."
+        }
+      ]
+    },
+    {
+      "id": "EURGBP",
+      "name": "Euro / Great Britain Pound",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Tendencias lentas y limpias."
+        },
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Alterna rangos y rupturas."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4"],
+          "why": "Pivots y rangos técnicos claramente definidos."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4"],
+          "why": "Adecuado para reversión estadística."
+        }
+      ]
+    },
+    {
+      "id": "EURJPY",
+      "name": "Euro / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4"],
+          "why": "JPY-cross con direccionalidad fuerte."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Respeta pivots y estructura."
+        }
+      ]
+    },
+    {
+      "id": "EURCAD",
+      "name": "Euro / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Correlación con petróleo apoya tendencias."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Pivots y Fibonacci funcionales."
+        }
+      ]
+    },
+    {
+      "id": "EURCHF",
+      "name": "Euro / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Momentum cíclico de volatilidad contenida."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["M30", "H1", "H4"],
+          "why": "Distribución favorable para Z-Score."
+        }
+      ]
+    },
+    {
+      "id": "EURAUD",
+      "name": "Euro / Australian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "H1"],
+          "why": "Expansión de rango predecible."
+        }
+      ]
+    },
+    {
+      "id": "EURNZD",
+      "name": "Euro / New Zealand Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Impulso amplio por diferencial EUR/NZD."
+        },
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Expansiones amplias de volatilidad."
+        }
+      ]
+    },
+    {
+      "id": "GBPJPY",
+      "name": "Great Britain Pound / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4"],
+          "why": "Tendencias amplias y direccionales."
+        },
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Impulsos claros de carry trade."
+        },
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "H1"],
+          "why": "Expansión de volatilidad frecuente."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Niveles técnicos relevantes."
+        }
+      ]
+    },
+    {
+      "id": "GBPNZD",
+      "name": "Great Britain Pound / New Zealand Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "H1"],
+          "why": "Cross de alta volatilidad."
+        }
+      ]
+    },
+    {
+      "id": "GBPAUD",
+      "name": "Great Britain Pound / Australian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Direccionalidad alta."
+        },
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "H1"],
+          "why": "Bandas anchas y expansiones frecuentes."
+        }
+      ]
+    },
+    {
+      "id": "GBPCAD",
+      "name": "Great Britain Pound / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Tendencias por GBP y correlación CAD/petróleo."
+        },
+        {
+          "category": "volatility",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "H1"],
+          "why": "Expansión de bandas por volatilidad GBP."
+        }
+      ]
+    },
+    {
+      "id": "GBPCHF",
+      "name": "Great Britain Pound / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Contraste GBP volátil y CHF defensivo."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Pivots y niveles estructurales."
+        }
+      ]
+    },
+    {
+      "id": "AUDJPY",
+      "name": "Australian Dollar / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Impulsos de carry trade claros."
+        }
+      ]
+    },
+    {
+      "id": "NZDJPY",
+      "name": "New Zealand Dollar / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Impulsos de carry trade."
+        }
+      ]
+    },
+    {
+      "id": "CADJPY",
+      "name": "Canadian Dollar / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Impulsos ligados a petróleo y carry."
+        }
+      ]
+    },
+    {
+      "id": "CHFJPY",
+      "name": "Swiss Franc / Japanese Yen",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Cambios risk-on/risk-off marcados."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Patrones de reversión estadística."
+        }
+      ]
+    },
+    {
+      "id": "AUDNZD",
+      "name": "Australian Dollar / New Zealand Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Momentum cíclico predecible."
+        },
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Alternancia de rango y ruptura."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4"],
+          "why": "Cross apto para reversión a la media."
+        }
+      ]
+    },
+    {
+      "id": "AUDCAD",
+      "name": "Australian Dollar / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "momentum",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Divergencia entre materias primas."
+        },
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Cambios de régimen por fundamentales."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4"],
+          "why": "Rango relativamente predecible."
+        }
+      ]
+    },
+    {
+      "id": "NZDCAD",
+      "name": "New Zealand Dollar / Canadian Dollar",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Alternancia de fases bien definida."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "++",
+          "timeframes": ["H1", "H4"],
+          "why": "Adecuado para mean reversion."
+        }
+      ]
+    },
+    {
+      "id": "CADCHF",
+      "name": "Canadian Dollar / Swiss Franc",
+      "asset_type": "Forex",
+      "subtype": "Cross",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "regime",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Cambios commodity/safe-haven."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Distribución favorable para extremos."
+        }
+      ]
+    },
+    {
+      "id": "US500",
+      "name": "US S&P 500",
+      "asset_type": "Indices",
+      "subtype": "US",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "L",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Bias alcista estructural y tendencias multi-mes."
+        },
+        {
+          "category": "trend",
+          "direction": "S",
+          "rating": "-",
+          "timeframes": ["M30", "H1"],
+          "why": "Solo correcciones profundas con ADX alto."
+        },
+        {
+          "category": "momentum",
+          "direction": "S",
+          "rating": "++",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "Caídas rápidas con momentum extremo."
+        },
+        {
+          "category": "volatility",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Breakouts alcistas de bandas en bull trends."
+        },
+        {
+          "category": "volatility",
+          "direction": "S",
+          "rating": "++",
+          "timeframes": ["M15", "M30"],
+          "why": "Expansión violenta de volatilidad en sell-offs."
+        },
+        {
+          "category": "regime",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Régimen alcista tendencial identificable."
+        },
+        {
+          "category": "regime",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Short solo con régimen bearish confirmado."
+        },
+        {
+          "category": "volume",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "VWAP institucional intradía."
+        },
+        {
+          "category": "volume",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["M5", "M15"],
+          "why": "Rechazo de VWAP desde abajo."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Soportes, pivots y niveles redondos."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Rechazo en resistencia y techo de rango."
+        },
+        {
+          "category": "statistical",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Z-Score negativo extremo favorece Long."
+        },
+        {
+          "category": "statistical",
+          "direction": "S",
+          "rating": "-",
+          "timeframes": ["M15", "M30"],
+          "why": "Short estadístico menos fiable por sesgo alcista."
+        }
+      ]
+    },
+    {
+      "id": "USTEC",
+      "name": "US Tech 100",
+      "asset_type": "Indices",
+      "subtype": "US",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "L",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Tendencia alcista estructural de tecnología."
+        },
+        {
+          "category": "trend",
+          "direction": "S",
+          "rating": "-",
+          "timeframes": ["M30", "H1"],
+          "why": "Correcciones profundas solamente."
+        },
+        {
+          "category": "momentum",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Rallies tecnológicos con impulso explosivo."
+        },
+        {
+          "category": "momentum",
+          "direction": "S",
+          "rating": "++",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "Categoría estrella para shorts de índice."
+        },
+        {
+          "category": "volatility",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Rupturas alcistas de volatilidad."
+        },
+        {
+          "category": "volatility",
+          "direction": "S",
+          "rating": "++",
+          "timeframes": ["M15", "M30"],
+          "why": "Sell-offs con expansión de bandas."
+        },
+        {
+          "category": "regime",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Short bajo régimen bearish confirmado."
+        },
+        {
+          "category": "volume",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "VWAP institucional para rallies."
+        },
+        {
+          "category": "volume",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["M5", "M15"],
+          "why": "Rechazo de VWAP en rebotes."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Soportes y niveles psicológicos."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Rechazo desde resistencia."
+        },
+        {
+          "category": "statistical",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Reversión Long tras extremos negativos."
+        },
+        {
+          "category": "statistical",
+          "direction": "S",
+          "rating": "-",
+          "timeframes": ["M15", "M30"],
+          "why": "Short estadístico requiere confirmación."
+        }
+      ]
+    },
+    {
+      "id": "US30",
+      "name": "US Wall Street 30",
+      "asset_type": "Indices",
+      "subtype": "US",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "L",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Tendencia alcista estructural."
+        },
+        {
+          "category": "volume",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "VWAP institucional."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Pivots y niveles redondos."
+        }
+      ]
+    },
+    {
+      "id": "GER40",
+      "name": "Germany 40",
+      "asset_type": "Indices",
+      "subtype": "Europe",
+      "enabled": true,
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Tendencia europea correlacionada con EEUU."
+        },
+        {
+          "category": "momentum",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M15", "M30"],
+          "why": "Ciclos intradía claros en apertura europea."
+        },
+        {
+          "category": "momentum",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["M15", "M30"],
+          "why": "Caídas intradía bruscas."
+        },
+        {
+          "category": "volatility",
+          "direction": "S",
+          "rating": "++",
+          "timeframes": ["M15", "M30"],
+          "why": "Expansión en gap-downs y crisis europeas."
+        },
+        {
+          "category": "regime",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H4", "D1"],
+          "why": "Régimen alcista identificable."
+        },
+        {
+          "category": "volume",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M5", "M15", "M30"],
+          "why": "VWAP en sesión europea."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Niveles DAX y pivots."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Resistencia y techos de rango."
+        },
+        {
+          "category": "statistical",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Reversión intradía en sesión europea."
+        }
+      ]
     },
     {
       "id": "XAUUSD",
@@ -176,95 +1036,92 @@
       "asset_type": "Metals",
       "subtype": "Gold",
       "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "XAGUSD",
-      "name": "Silver / US Dollar",
-      "asset_type": "Metals",
-      "subtype": "Silver",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "SP500",
-      "name": "US S&P 500",
-      "asset_type": "Indices",
-      "subtype": "US",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "NDX",
-      "name": "US Tech 100",
-      "asset_type": "Indices",
-      "subtype": "US",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "DJI",
-      "name": "US Wall Street 30",
-      "asset_type": "Indices",
-      "subtype": "US",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "GDAXI",
-      "name": "Germany 40",
-      "asset_type": "Indices",
-      "subtype": "Europe",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "UK100",
-      "name": "UK 100",
-      "asset_type": "Indices",
-      "subtype": "Europe",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "FCHI",
-      "name": "France 40",
-      "asset_type": "Indices",
-      "subtype": "Europe",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "HSI",
-      "name": "Hong Kong 50",
-      "asset_type": "Indices",
-      "subtype": "Asia",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "USOIL",
-      "name": "US Crude Oil",
-      "asset_type": "Commodities",
-      "subtype": "Energy",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "UKOIL",
-      "name": "Brent Crude Oil",
-      "asset_type": "Commodities",
-      "subtype": "Energy",
-      "enabled": true,
-      "edges": []
-    },
-    {
-      "id": "BTCUSD",
-      "name": "Bitcoin / US Dollar",
-      "asset_type": "Crypto",
-      "subtype": "Major",
-      "enabled": true,
-      "edges": []
+      "edges": [
+        {
+          "category": "trend",
+          "direction": "L",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Tendencias alcistas por risk-off e inflación."
+        },
+        {
+          "category": "trend",
+          "direction": "S",
+          "rating": "-",
+          "timeframes": ["H1", "H4"],
+          "why": "Short más corto y errático bajo USD fuerte."
+        },
+        {
+          "category": "momentum",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Impulsos en eventos macro."
+        },
+        {
+          "category": "momentum",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["M15", "M30"],
+          "why": "Caídas rápidas con USD fuerte."
+        },
+        {
+          "category": "volatility",
+          "direction": "L",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Rupturas alcistas en crisis."
+        },
+        {
+          "category": "volatility",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["M30", "H1"],
+          "why": "Ruptura de bandas inferiores."
+        },
+        {
+          "category": "regime",
+          "direction": "L",
+          "rating": "++",
+          "timeframes": ["H4", "D1"],
+          "why": "Acumulación y expansión claramente diferenciables."
+        },
+        {
+          "category": "regime",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["H4"],
+          "why": "Régimen bearish en rally de USD."
+        },
+        {
+          "category": "volume",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["M15", "M30"],
+          "why": "VWAP actúa como pivot intradía."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "L",
+          "rating": "++",
+          "timeframes": ["H1", "H4", "D1"],
+          "why": "Niveles redondos y Fibonacci históricos."
+        },
+        {
+          "category": "support_resistance",
+          "direction": "S",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Rechazo en resistencia y rango lateral."
+        },
+        {
+          "category": "statistical",
+          "direction": "LS",
+          "rating": "+",
+          "timeframes": ["H1", "H4"],
+          "why": "Z-Score sobre ATR para anomalías."
+        }
+      ]
     }
   ]
 }
