@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
   <main class="shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">SQX EDGE PRO · FASE 2B</p>
+        <p class="eyebrow">SQX EDGE PRO · FASE 2C</p>
         <h1>Catálogo y Calidad MT5</h1>
         <p class="subtitle">Edge persistente · snapshots MT5 · SQLite · API local</p>
       </div>
@@ -88,6 +88,7 @@
           <button id="showAllQualityButton" type="button" disabled>
             Todos
           </button>
+          <button id="openImportButton" type="button">Importar CSV MT5</button>
         </div>
       </div>
 
@@ -194,6 +195,17 @@
     </section>
   </main>
 
+  <dialog id="importDialog" class="import-dialog">
+    <form id="importForm">
+      <header><h2>Importar calidad MT5</h2><button type="button" id="closeImportButton">Cerrar</button></header>
+      <label>Proveedor / broker<input id="providerInput" list="providerSuggestions" maxlength="100" required placeholder="Ej.: Darwinex" /></label>
+      <datalist id="providerSuggestions"></datalist>
+      <label>CSV estadísticas<div class="file-picker"><output id="statsFileName">Sin seleccionar</output><button type="button" id="selectStatsButton">Seleccionar</button></div></label>
+      <label>CSV horario<div class="file-picker"><output id="hourlyFileName">Sin seleccionar</output><button type="button" id="selectHourlyButton">Seleccionar</button></div></label>
+      <p id="importValidation" class="form-status"></p>
+      <footer><button type="button" id="cancelImportButton">Cancelar</button><button id="submitImportButton" type="submit" disabled>Importar snapshot</button></footer>
+    </form>
+  </dialog>
   <script type="module" src="./js/app.js"></script>
 </body>
 </html>

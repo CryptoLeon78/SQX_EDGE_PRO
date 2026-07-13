@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import csv
 import io
@@ -47,8 +47,10 @@ def detect_delimiter(content: str) -> str:
 
 def read_csv_rows(path: str | Path) -> tuple[list[dict[str, str]], str]:
     source = Path(path)
-    if not source.exists():
+    if not source.exists() or not source.is_file():
         raise Mt5CsvValidationError(f"Archivo no encontrado: {source}")
+    if source.suffix.lower() != ".csv":
+        raise Mt5CsvValidationError(f"El archivo debe tener extensión .csv: {source.name}")
 
     content = source.read_text(encoding="utf-8-sig")
     delimiter = detect_delimiter(content)
@@ -125,7 +127,7 @@ def parse_stats(path: str | Path) -> tuple[list[dict[str, Any]], str]:
             all_count += 1
         else:
             year = as_int(year_raw, "Year", row_label)
-            if year < 2000 or year > 2200:
+            if year < 2000 or year > 2100:
                 raise Mt5CsvValidationError(f"{row_label}: Year fuera de rango.")
 
         parsed = {

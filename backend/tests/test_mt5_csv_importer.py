@@ -1,6 +1,7 @@
-﻿from pathlib import Path
+from pathlib import Path
 import sys
 import unittest
+import tempfile
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 BACKEND_DIR = PROJECT_ROOT / "backend"
@@ -48,6 +49,34 @@ class Mt5CsvImporterTests(unittest.TestCase):
         self.assertEqual(parsed.summary["year"], None)
         self.assertEqual(parsed.summary["avg_spread"], 6.4085)
         self.assertEqual(parsed.summary["current_spread"], 8.0)
+
+    def test_tab_comma_and_semicolon_delimiters(self) -> None:
+        source = (FIXTURES / "AUDCAD_spread_stats.csv").read_text(encoding="utf-8-sig")
+        for delimiter in ("\t", ",", ";"):
+            with self.subTest(delimiter=delimiter), tempfile.TemporaryDirectory() as temporary:
+                path = Path(temporary) / "stats.csv"
+                path.write_text(source.replace("\t", delimiter), encoding="utf-8-sig")
+                parsed = parse_mt5_quality(path)
+                self.assertEqual(parsed.raw_symbol, "AUDCAD")
+
+    def test_all_row_is_required_and_unique(self) -> None:
+        source = (FIXTURES / "AUDCAD_spread_stats.csv").read_text(encoding="utf-8-sig")
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "stats.csv"
+            lines = source.splitlines()
+            path.write_text("\n".join([lines[0]] + [line for line in lines[1:] if "\tALL\t" not in line]), encoding="utf-8")
+            with self.assertRaises(Mt5CsvValidationError): parse_mt5_quality(path)
+            path.write_text(source + "\n" + lines[1], encoding="utf-8")
+            with self.assertRaises(Mt5CsvValidationError): parse_mt5_quality(path)
+
+    def test_invalid_hour_samples_and_percentile_are_rejected(self) -> None:
+        hourly = (FIXTURES / "AUDCAD_spread_hourly.csv").read_text(encoding="utf-8-sig")
+        stats = FIXTURES / "AUDCAD_spread_stats.csv"
+        for replacement in (("\t0\t", "\t24\t"), ("\t10221128\t", "\t0\t"), ("\t18\t", "\t-1\t")):
+            with self.subTest(replacement=replacement), tempfile.TemporaryDirectory() as temporary:
+                path = Path(temporary) / "hourly.csv"
+                path.write_text(hourly.replace(*replacement, 1), encoding="utf-8")
+                with self.assertRaises(Mt5CsvValidationError): parse_mt5_quality(stats, path)
 
     def test_symbols_must_match(self) -> None:
         with self.assertRaises(Mt5CsvValidationError):

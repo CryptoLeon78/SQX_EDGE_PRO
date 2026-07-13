@@ -1,4 +1,4 @@
-﻿const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, dialog, ipcMain } = require("electron");
 const path = require("path");
 const net = require("net");
 
@@ -65,6 +65,14 @@ app.whenReady().then(async () => {
       appVersion: app.getVersion(),
       platform: process.platform,
     }));
+    ipcMain.handle("quality:select-csv", async () => {
+      const result = await dialog.showOpenDialog(mainWindow, {
+        title: "Selecciona los CSV de calidad MT5",
+        properties: ["openFile", "multiSelections"],
+        filters: [{ name: "CSV de calidad MT5", extensions: ["csv"] }],
+      });
+      return { canceled: result.canceled, filePaths: result.filePaths };
+    });
 
     await createWindow();
   } catch (error) {

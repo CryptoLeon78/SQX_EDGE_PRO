@@ -1,4 +1,4 @@
-﻿import json
+import json
 import sqlite3
 from pathlib import Path
 from typing import Any
@@ -156,8 +156,8 @@ def create_quality_schema(connection: sqlite3.Connection) -> None:
         )
     """)
     connection.execute("""
-        CREATE INDEX IF NOT EXISTS idx_quality_snapshots_asset_imported
-        ON quality_snapshots(canonical_asset_id, imported_at DESC)
+        CREATE INDEX IF NOT EXISTS idx_quality_snapshots_asset_provider_imported
+        ON quality_snapshots(canonical_asset_id, provider, imported_at DESC)
     """)
 
 

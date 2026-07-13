@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #0a0d12;
   --panel: #10151c;
   --panel-2: #151b23;
@@ -555,3 +555,16 @@ button:disabled {
   .quality-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .asset-quality-link { align-items: stretch; flex-direction: column; }
 }
+
+.import-dialog { width: min(620px, calc(100vw - 32px)); color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 0; }
+.import-dialog::backdrop { background: rgba(0, 0, 0, .68); }
+.import-dialog form { padding: 20px; display: grid; gap: 16px; }
+.import-dialog header, .import-dialog footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.import-dialog h2 { margin: 0; }
+.import-dialog label { display: grid; gap: 7px; color: var(--muted); font: 11px var(--mono); text-transform: uppercase; }
+.import-dialog input { padding: 10px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px; color: var(--text); }
+.file-picker { display: flex; gap: 10px; align-items: center; }
+.file-picker output { flex: 1; overflow-wrap: anywhere; text-transform: none; color: var(--text); }
+.form-status { min-height: 18px; margin: 0; color: var(--muted); font: 12px var(--mono); }
+.form-status.error { color: var(--bad); }
+.form-status.ok { color: var(--good); }

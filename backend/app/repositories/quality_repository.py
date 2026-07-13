@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import sqlite3
 from typing import Any
@@ -162,3 +162,9 @@ class QualityRepository:
         result["years"] = [dict(row) for row in years]
         result["hours"] = [dict(row) for row in hours]
         return result
+
+    def list_providers(self) -> list[str]:
+        rows = self.connection.execute(
+            "SELECT DISTINCT provider FROM quality_snapshots WHERE TRIM(provider) <> '' ORDER BY provider COLLATE NOCASE"
+        ).fetchall()
+        return [str(row["provider"]) for row in rows]

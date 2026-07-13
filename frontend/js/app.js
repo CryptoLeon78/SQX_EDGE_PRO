@@ -1,4 +1,4 @@
-﻿const state = {
+const state = {
   runtime: null,
   assets: [],
   snapshots: [],
@@ -36,7 +36,22 @@ const elements = {
   qualityP99: document.querySelector("#qualityP99"),
   qualityYearsBody: document.querySelector("#qualityYearsBody"),
   qualityHoursBody: document.querySelector("#qualityHoursBody"),
+  openImportButton: document.querySelector("#openImportButton"),
+  importDialog: document.querySelector("#importDialog"),
+  importForm: document.querySelector("#importForm"),
+  providerInput: document.querySelector("#providerInput"),
+  providerSuggestions: document.querySelector("#providerSuggestions"),
+  statsFileName: document.querySelector("#statsFileName"),
+  hourlyFileName: document.querySelector("#hourlyFileName"),
+  selectStatsButton: document.querySelector("#selectStatsButton"),
+  selectHourlyButton: document.querySelector("#selectHourlyButton"),
+  importValidation: document.querySelector("#importValidation"),
+  submitImportButton: document.querySelector("#submitImportButton"),
+  closeImportButton: document.querySelector("#closeImportButton"),
+  cancelImportButton: document.querySelector("#cancelImportButton"),
 };
+
+const importState = { statsPath: "", hourlyPath: "" };
 
 function setBadge(text, stateName) {
   elements.badge.textContent = text;
@@ -425,3 +440,73 @@ elements.showAllQualityButton.addEventListener("click", () => {
 });
 
 loadApplicationData();
+
+
+async function postJson(path, payload) {
+  const response = await fetch(`${state.runtime.apiBaseUrl}${path}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(body.detail || `Error HTTP ${response.status}`);
+  return body;
+}
+
+function refreshImportControls() {
+  const valid = elements.providerInput.value.trim() && importState.statsPath && importState.hourlyPath;
+  elements.submitImportButton.disabled = !valid;
+}
+
+function setImportStatus(text, kind = "") {
+  elements.importValidation.textContent = text;
+  elements.importValidation.className = `form-status ${kind}`;
+}
+
+function classifySelectedFiles(filePaths) {
+  const stats = filePaths.filter((path) => /spread[_-]?stats/i.test(path));
+  const hourly = filePaths.filter((path) => /spread[_-]?hourly/i.test(path));
+  if (stats.length !== 1 || hourly.length !== 1 || filePaths.length !== 2) {
+    throw new Error("Selecciona exactamente dos CSV: uno spread_stats y otro spread_hourly.");
+  }
+  importState.statsPath = stats[0]; importState.hourlyPath = hourly[0];
+  elements.statsFileName.textContent = stats[0]; elements.hourlyFileName.textContent = hourly[0];
+  setImportStatus("Pareja de CSV detectada.", "ok"); refreshImportControls();
+}
+
+async function chooseMt5Files() {
+  try {
+    const result = await window.sqxEdge.selectMt5QualityCsv();
+    if (!result.canceled) classifySelectedFiles(result.filePaths);
+  } catch (error) { setImportStatus(error.message, "error"); }
+}
+
+async function loadProviders() {
+  const payload = await request("/api/quality/providers");
+  elements.providerSuggestions.innerHTML = ["MT5 local", "Darwinex", "IC Markets", "Pepperstone", ...payload.providers]
+    .filter((value, index, values) => values.indexOf(value) === index)
+    .map((provider) => `<option value="${escapeHtml(provider)}"></option>`).join("");
+}
+
+async function submitMt5Import(event) {
+  event.preventDefault();
+  refreshImportControls();
+  if (elements.submitImportButton.disabled) return;
+  elements.submitImportButton.disabled = true;
+  setImportStatus("Importando y archivando snapshot…");
+  try {
+    const payload = await postJson("/api/import/mt5-csv", { provider: elements.providerInput.value.trim(), stats_path: importState.statsPath, hourly_path: importState.hourlyPath });
+    await loadCatalog();
+    await loadQualitySnapshots();
+    state.selectedSnapshotId = payload.snapshot_id;
+    await loadQualityDetail(payload.snapshot_id);
+    elements.importDialog.close();
+    elements.qualityStatus.textContent = payload.message;
+  } catch (error) { setImportStatus(error.message, "error"); }
+  finally { refreshImportControls(); }
+}
+
+if (elements.openImportButton) {
+  elements.openImportButton.addEventListener("click", async () => { await loadProviders(); elements.importDialog.showModal(); });
+  elements.selectStatsButton.addEventListener("click", chooseMt5Files);
+  elements.selectHourlyButton.addEventListener("click", chooseMt5Files);
+  elements.providerInput.addEventListener("input", refreshImportControls);
+  elements.importForm.addEventListener("submit", submitMt5Import);
+  [elements.closeImportButton, elements.cancelImportButton].forEach((button) => button.addEventListener("click", () => elements.importDialog.close()));
+}

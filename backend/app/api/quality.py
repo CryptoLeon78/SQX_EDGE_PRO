@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from app.database.migrations import connect, migrate
 from app.repositories.quality_repository import QualityRepository
@@ -14,6 +14,14 @@ def list_quality_snapshots(
     with connect() as connection:
         snapshots = QualityRepository(connection).list_snapshots(asset_id=asset_id)
     return {"count": len(snapshots), "snapshots": snapshots}
+
+
+@router.get("/providers")
+def list_quality_providers() -> dict:
+    migrate()
+    with connect() as connection:
+        providers = QualityRepository(connection).list_providers()
+    return {"providers": providers}
 
 
 @router.get("/{snapshot_id}")
