@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query
 
-from app.database.migrations import connect, migrate
+from app.database.migrations import connect
 from app.repositories.quality_repository import QualityRepository
 
 router = APIRouter(prefix="/api/quality", tags=["quality"])
@@ -10,7 +10,6 @@ router = APIRouter(prefix="/api/quality", tags=["quality"])
 def list_quality_snapshots(
     asset_id: str | None = Query(default=None),
 ) -> dict:
-    migrate()
     with connect() as connection:
         snapshots = QualityRepository(connection).list_snapshots(asset_id=asset_id)
     return {"count": len(snapshots), "snapshots": snapshots}
@@ -18,7 +17,6 @@ def list_quality_snapshots(
 
 @router.get("/providers")
 def list_quality_providers() -> dict:
-    migrate()
     with connect() as connection:
         providers = QualityRepository(connection).list_providers()
     return {"providers": providers}
@@ -26,7 +24,6 @@ def list_quality_providers() -> dict:
 
 @router.get("/{snapshot_id}")
 def get_quality_snapshot(snapshot_id: int) -> dict:
-    migrate()
     with connect() as connection:
         snapshot = QualityRepository(connection).get_snapshot(snapshot_id)
 

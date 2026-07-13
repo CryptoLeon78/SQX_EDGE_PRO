@@ -4,7 +4,7 @@ import shutil
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, field_validator
 
-from app.database.migrations import connect, migrate
+from app.database.migrations import connect
 from app.repositories.quality_repository import QualityRepository
 from app.services.mt5_csv_importer import Mt5CsvValidationError, parse_mt5_quality
 from app.services.mt5_import_archive import archive_mt5_csvs
@@ -32,7 +32,6 @@ def _import(payload: Mt5CsvImportRequest) -> dict:
     except Mt5CsvValidationError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error
 
-    migrate()
     archive_dir = stats_archive = hourly_archive = None
     try:
         archive_dir, stats_archive, hourly_archive = archive_mt5_csvs(

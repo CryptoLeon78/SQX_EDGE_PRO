@@ -1,10 +1,3 @@
-﻿import sqlite3
-from app.config import DATABASE_PATH, ensure_data_directories
-
-SCHEMA_VERSION = 1
-
-def connect() -> sqlite3.Connection:
-    ensure_data_directories()
-    connection = sqlite3.connect(DATABASE_PATH)
-    connection.row_factory = sqlite3.Row
-    return connection
+# Re-exporta connect() desde migrations para mantener compatibilidad.
+# La versión canónica (con PRAGMA foreign_keys = ON) vive en migrations.py.
+from app.database.migrations import connect as connect  # noqa: F401
