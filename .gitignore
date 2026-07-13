@@ -1,18 +1,45 @@
-﻿node_modules/
-release/
-dist/
-out/
-*.log
-
-backend/.venv/
-backend/__pycache__/
-backend/**/*.pyc
-
+﻿# ===== AMBIENTE LOCAL =====
 .env
+.env.local
+.env.*.local
+.venv
+venv/
+env/
+ENV/
+
+# ===== EDITOR / IDE =====
 .vscode/
 .idea/
+.sublime-project
+.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
 
-# Datos de ejecución: viven en LocalAppData, nunca dentro del repo.
+# ===== ARTIFACTS COMPILADOS =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ===== DATOS LOCALES (NUNCA COMMITEAR) =====
 data/
 imports/
 exports/
@@ -20,3 +47,52 @@ logs/
 backups/
 profiles/
 *.db
+*.sqlite
+*.sqlite3
+
+# ===== ELECTRON / NODE =====
+node_modules/
+npm-debug.log
+yarn-error.log
+out/
+release/
+dist/
+
+# ===== BUILD Y TESTING =====
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.hypothesis/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ===== LOGS =====
+*.log
+logs/
+
+# ===== OS =====
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ===== PROYECTO ESPECÍFICO =====
+# Descarga de datos extensos
+/data_large/
+*.tar.gz
+*.zip
+
+# Cache de venv backend
+backend/.venv/
+backend/.env.local
+
+# Frontend build
+frontend/dist/
+frontend/node_modules/
+
+# Desktop build
+desktop/node_modules/
+desktop/dist/
+desktop/release/
