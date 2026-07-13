@@ -72,11 +72,22 @@ class Mt5CsvImporterTests(unittest.TestCase):
     def test_invalid_hour_samples_and_percentile_are_rejected(self) -> None:
         hourly = (FIXTURES / "AUDCAD_spread_hourly.csv").read_text(encoding="utf-8-sig")
         stats = FIXTURES / "AUDCAD_spread_stats.csv"
-        for replacement in (("\t0\t", "\t24\t"), ("\t10221128\t", "\t0\t"), ("\t18\t", "\t-1\t")):
-            with self.subTest(replacement=replacement), tempfile.TemporaryDirectory() as temporary:
+        header, first_row, *remaining = hourly.splitlines()
+        fields = first_row.split("\t")
+
+        cases = {
+            "hour": (1, "24"),
+            "samples": (11, "0"),
+            "p99": (7, "-1"),
+        }
+        for name, (index, value) in cases.items():
+            with self.subTest(case=name), tempfile.TemporaryDirectory() as temporary:
+                altered = fields.copy()
+                altered[index] = value
                 path = Path(temporary) / "hourly.csv"
-                path.write_text(hourly.replace(*replacement, 1), encoding="utf-8")
-                with self.assertRaises(Mt5CsvValidationError): parse_mt5_quality(stats, path)
+                path.write_text("\n".join([header, "\t".join(altered), *remaining]), encoding="utf-8")
+                with self.assertRaises(Mt5CsvValidationError):
+                    parse_mt5_quality(stats, path)
 
     def test_symbols_must_match(self) -> None:
         with self.assertRaises(Mt5CsvValidationError):
